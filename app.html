@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html {{ HTML_ATTRS }}>
+  <head {{ HEAD_ATTRS }}>
+    <script type="text/javascript">
+      window.onerror = function(msg, url, line, col, error) {
+         if ((msg === 'SyntaxError' && error === "Unexpected token '<'" && !window.location.hash) || (msg === 'ChunkLoadError' && !window.location.hash)) {
+              window.location = window.location + '#refresh';
+              window.location.reload();
+         }
+      };
+      </script>
+    {{ HEAD }}
+  </head>
+  <body {{ BODY_ATTRS }}>
+    {{ APP }}
+  </body>
+</html>
