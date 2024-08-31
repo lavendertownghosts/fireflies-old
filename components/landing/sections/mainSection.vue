@@ -77,6 +77,13 @@
           >
             {{ $t('general.SignIn') }}
           </button>
+          <button
+            class="mx-8 rounded-full px-8 py-9 bg-landingButtonBackground text-white"
+            @click="handler"
+          >
+            {{ $t('general.Connect') }}
+          </button>
+          <div class="text-lg">{{ $t(`${address}`) }}</div>
         </nav>
         <nav class="md:hidden mr-5 flex items-start flex-col">
           <button
@@ -189,6 +196,8 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import Web3 from 'web3'
+// import Eth from 'web3-eth'
 import LandingButton from '@/components/landing/elements/landingButton'
 import DefaultModal from '@/components/modal/DefaultModal'
 import LoginForm from '@/components/forms/LoginForm'
@@ -227,7 +236,8 @@ export default {
         de: deFlag,
         pl: plFlag,
         tr: trFlag
-      }
+      },
+      address: ''
     }
   },
   computed: {
@@ -270,6 +280,17 @@ export default {
     },
     showLanguageSelect() {
       this.languageSelectActive = !this.languageSelectActive
+    },
+    async handler() {
+      if (window.ethereum) {
+        await window.ethereum.request({
+          method: 'eth_requestAccounts'
+        })
+        const web3 = new Web3(window.ethereum)
+        const account = web3.eth.accounts
+        const walletAddress = account.givenProvider.selectedAddress
+        this.address = walletAddress
+      }
     },
     getLanguageName,
     ...mapMutations({
