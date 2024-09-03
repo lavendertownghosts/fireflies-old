@@ -77,12 +77,13 @@
           >
             {{ $t('general.SignIn') }}
           </button>
-          <button
+          <!-- <button
             class="mx-8 rounded-full px-8 py-9 bg-landingButtonBackground text-white"
             @click="handler"
           >
             {{ $t('general.Connect') }}
-          </button>
+          </button> -->
+          <Web3Button />
           <div class="text-lg">{{ $t(`${address}`) }}</div>
         </nav>
         <nav class="md:hidden mr-5 flex items-start flex-col">
@@ -196,9 +197,9 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import Web3 from 'web3'
-// import Eth from 'web3-eth'
+// import Web3 from 'web3'
 import LandingButton from '@/components/landing/elements/landingButton'
+import Web3Button from '@/components/landing/elements/web3Button'
 import DefaultModal from '@/components/modal/DefaultModal'
 import LoginForm from '@/components/forms/LoginForm'
 import { getLanguageName, isMobileUser } from '@/includes/utils'
@@ -281,17 +282,17 @@ export default {
     showLanguageSelect() {
       this.languageSelectActive = !this.languageSelectActive
     },
-    async handler() {
-      if (window.ethereum) {
-        await window.ethereum.request({
-          method: 'eth_requestAccounts'
-        })
-        const web3 = new Web3(window.ethereum)
-        const account = web3.eth.accounts
-        const walletAddress = account.givenProvider.selectedAddress
-        this.address = walletAddress
-      }
-    },
+    // async handler() {
+    //   if (window.ethereum) {
+    //     await window.ethereum.request({
+    //       method: 'eth_requestAccounts'
+    //     })
+    //     const web3 = new Web3(window.ethereum)
+    //     const account = web3.eth.accounts
+    //     const walletAddress = account.givenProvider.selectedAddress
+    //     this.address = walletAddress
+    //   }
+    // },
     getLanguageName,
     ...mapMutations({
       resetState: 'user/resetState',
